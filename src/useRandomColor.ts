@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { useStore } from "./useStore";
 
 export type Color = string;
@@ -11,6 +11,8 @@ export const useRandomColor = () => {
     key,
     defaultValue: defaultColor,
   });
+
+  const color = useSyncExternalStore<Color>(store.subscribe, store.getSnapshot);
 
   useEffect(() => {
     initStore();
@@ -31,7 +33,7 @@ export const useRandomColor = () => {
   };
 
   return {
-    store,
+    color,
     changeColor,
   };
 };
